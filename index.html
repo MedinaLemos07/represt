@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vc eh chata? (teste 100% cientifico)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --roxo-1:#1a0b2e;
+    --roxo-2:#3d1a6b;
+    --roxo-3:#2a1250;
+    --lilas:#c9a6ff;
+    --lilas-forte:#a374ff;
+    --branco:#faf7ff;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(160deg, var(--roxo-1) 0%, var(--roxo-2) 55%, var(--roxo-3) 100%);
+    background-attachment:fixed;
+    color:var(--branco);
+    text-align:center;
+  }
+
+  .card{
+    width:100%;
+    max-width:440px;
+    background:#25123f;
+    border:3px solid var(--lilas-forte);
+    border-radius:18px 22px 20px 16px;
+    padding:38px 30px 32px;
+    box-shadow:8px 8px 0px rgba(163,116,255,0.35);
+    transform:rotate(-0.6deg);
+    position:relative;
+  }
+
+  .icone-topo{
+    position:absolute;
+    top:-20px;
+    right:22px;
+    width:38px;
+    height:38px;
+    background:#3a1c66;
+    border:2px solid var(--lilas-forte);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(8deg);
+  }
+  .icone-topo svg{
+    width:18px;
+    height:18px;
+    stroke:var(--lilas);
+  }
+
+  .icone-inline{
+    width:16px;
+    height:16px;
+    stroke:currentColor;
+    vertical-align:-3px;
+    margin-right:4px;
+  }
+
+  .assinatura{
+    position:fixed;
+    top:18px;
+    right:18px;
+    text-align:right;
+    font-family:'Kalam', cursive;
+    color:var(--lilas);
+    line-height:1.3;
+    transform:rotate(-2deg);
+    z-index:5;
+  }
+  .assinatura .linha1{
+    font-size:13px;
+    opacity:0.85;
+  }
+  .assinatura .linha2{
+    font-size:20px;
+    font-weight:700;
+    color:var(--branco);
+  }
+
+  .coracao{
+    width:20px;
+    height:20px;
+    fill:var(--lilas-forte);
+    vertical-align:-4px;
+    margin-left:4px;
+  }
+
+  .pergunta{
+    font-size:21px;
+    font-weight:600;
+    line-height:1.45;
+    text-align:center;
+    margin:0 0 26px;
+  }
+
+  .opcoes{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+  }
+
+  .opcao{
+    font-family:'Poppins', sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--branco);
+    background:#3a1c66;
+    border:2px solid var(--lilas-forte);
+    border-radius:10px;
+    padding:13px 16px;
+    cursor:pointer;
+    text-align:center;
+    width:100%;
+  }
+
+  .opcao:hover{
+    background:var(--lilas-forte);
+    color:#25123f;
+  }
+  .opcao:active{
+    transform:scale(0.97);
+  }
+  .opcao:disabled{
+    opacity:0.5;
+    cursor:default;
+  }
+
+  .veredito{
+    font-family:'Kalam', cursive;
+    font-size:17px;
+    color:var(--lilas);
+    text-align:center;
+    margin:22px 0 4px;
+    display:none;
+  }
+
+  .btn-proximo{
+    display:none;
+    margin:18px auto 0;
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.03em;
+    color:#25123f;
+    background:var(--lilas);
+    border:none;
+    border-radius:8px;
+    padding:12px 26px;
+    cursor:pointer;
+  }
+  .btn-proximo:hover{ background:var(--branco); }
+
+  .resultado-titulo{
+    font-family:'Kalam', cursive;
+    font-size:26px;
+    text-align:center;
+    color:var(--lilas);
+    margin:6px 0 18px;
+  }
+  .resultado-lista{
+    font-size:14px;
+    line-height:1.9;
+    background:#1a0b2e;
+    border:2px dashed var(--lilas-forte);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:18px;
+  }
+  .resultado-lista b{ color:var(--lilas); }
+  .rodape{
+    font-family:'Kalam', cursive;
+    font-size:14px;
+    text-align:center;
+    color:#cbb8ff;
+    opacity:0.85;
+  }
+
+  .linha-finalizar{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:16px;
+  }
+  .btn-finalizar{
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.02em;
+    color:#25123f;
+    background:var(--lilas);
+    border:none;
+    border-radius:8px;
+    padding:10px 18px;
+    cursor:pointer;
+  }
+  .btn-finalizar:hover{ background:var(--branco); }
+
+  .btn-coracao{
+    display:block;
+    margin:22px auto 0;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    padding:6px;
+  }
+  .coracao-btn{
+    width:34px;
+    height:34px;
+    fill:var(--lilas-forte);
+  }
+  .btn-coracao:hover .coracao-btn{ fill:var(--branco); }
+
+  @media (max-width:480px){
+    .card{ padding:30px 20px 26px; }
+    .pergunta{ font-size:19px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="assinatura">
+  <div class="linha1">O MAIS FODA</div>
+  <div class="linha2">MEDINA</div>
+</div>
+
+<div class="card" id="card"></div>
+
+<script>
+  const card = document.getElementById("card");
+
+  const iconeTopoHTML = `
+    <div class="icone-topo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="7" y="3" width="10" height="4" rx="1"></rect>
+        <path d="M7 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+        <path d="M9 12h6"></path>
+        <path d="M9 16h4"></path>
+      </svg>
+    </div>
+  `;
+
+  const svgCoracao = `<svg class="coracao" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3C11.6 4.7 13.4 3.7 15.4 4c3.6.5 5.2 4.1 3.6 7.7C19.5 16.4 12 21 12 21z"></path></svg>`;
+
+  const svgAlerta = `<svg class="icone-inline" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`;
+
+  const perguntas = {
+    q1: { texto:"Você é chata?", opcoes:[
+      { label:"SOU", resp:"pelo menos você é chata e honesta.", prox:"q2" },
+      { label:"TALVEZ", resp:"\u201ctalvez\u201d já é o jeito chato de dizer sim.", prox:"q2" }
+    ]},
+    q2: { texto:"Mas você tem certeza disso?", opcoes:[
+      { label:"CERTEZA", resp:"boa. primeiro passo é aceitar.", prox:"q3" },
+      { label:"ABSOLUTA", resp:"rápido assim? nem precisou pensar.", prox:"q3" }
+    ]},
+    q3: { texto:"Você sempre foi assim ou foi piorando com o tempo?", opcoes:[
+      { label:"SEMPRE FUI", resp:"nasceu pronta, então.", prox:"q4" },
+      { label:"FOI PIORANDO", resp:"um verdadeiro projeto de anos.", prox:"q4" }
+    ]},
+    q4: { texto:"As pessoas ao seu redor percebem que você é chata?", opcoes:[
+      { label:"CLARO QUE SIM", resp:"finalmente uma resposta correta.", prox:"q5" },
+      { label:"TODAS ELAS", resp:"consenso geral é sempre um bom sinal.", prox:"q5" }
+    ]},
+    q5: { texto:"Quando alguém fala que você é chata, você...", opcoes:[
+      { label:"ACEITO JÁ QUE É A VERDADE", resp:"maturidade reconhecida.", prox:"q6" },
+      { label:"SEMPRE FALO \u201cVOU MELHORAR\u201d", resp:"Eu sei, e você nunca melhora né?", prox:"q6" }
+    ]},
+    q6: { texto:"Você consegue ficar 5 minutos sem ser chata?", opcoes:[
+      { label:"NUNCA", resp:"pelo menos é consistente.", prox:"q6loop" },
+      { label:"JAMAIS", resp:"nem um minutinho, hein.", prox:"q6loop" }
+    ]},
+    q6loop: { texto:"Tenta de novo: consegue ficar 5 minutos sem ser chata?", opcoes:[
+      { label:"TÁ BOM, ÀS VEZES", resp:"agora sim, uma mentirinha melhorzinha.", prox:"q7" },
+      { label:"OK, NUNCA MESMO", resp:"essa doeu, mas foi sincera.", prox:"q7" }
+    ]},
+    q7: { texto:"Você para de mentir sobre isso algum dia?", opcoes:[
+      { label:"PARO SIM", resp:"ninguém aqui acreditou nisso.", prox:"q8", alerta:true },
+      { label:"NUNCA VOU PARAR", resp:"pelo menos avisou.", prox:"q8" }
+    ]},
+    q8: { texto:"De 0 a 100%, o quanto você é chata?", opcoes:[
+      { label:"99%", resp:"só faltou admitir aquele 1%.", prox:"q9" },
+      { label:"100%", resp:"aí sim, verdade nua e crua.", prox:"q9" }
+    ]},
+    q9: { texto:"Se existisse um campeonato mundial de chatice, você seria...", opcoes:[
+      { label:"CAMPEÃ", resp:"humilde.", prox:"q10" },
+      { label:"BICAMPEÃ", resp:"já pensando no próximo título?", prox:"q10" }
+    ]},
+    q10: { texto:"Você promete tentar ser menos chata?", opcoes:[
+      { label:"PROMETO", resp:"ninguém aqui acredita nessa promessa.", prox:"q11" },
+      { label:"NÃO CONSIGO PROMETER", resp:"pelo menos foi sincera dessa vez.", prox:"q11" }
+    ]},
+    q11: { texto:"Depois de tudo isso, você admite que é chata?", opcoes:[
+      { label:"AINDA NÃO", resp:"a negação continua forte.", prox:"q12" },
+      { label:"AINDA NÃO", resp:"essa insistência já é prova suficiente.", prox:"q12" }
+    ]},
+    q12: { texto:"Vamos tentar de novo... você é chata?", opcoes:[
+      { label:"OK, SOU CHATA", resp:"finalmente.", prox:"RESULTADO" },
+      { label:"MUITO CHATA", resp:"obrigado pela sinceridade.", prox:"RESULTADO" }
+    ]}
+  };
+
+  function baseSkeleton(){
+    card.innerHTML = `
+      ${iconeTopoHTML}
+      <div class="pergunta" id="pergunta"></div>
+      <div class="opcoes" id="opcoes"></div>
+      <div class="veredito" id="veredito"></div>
+      <button class="btn-proximo" id="btnProximo">PRÓXIMO</button>
+    `;
+  }
+
+  function moverAleatorio(btn){
+    const largura = btn.offsetWidth || 150;
+    const altura = btn.offsetHeight || 45;
+    const margem = 16;
+    const maxX = Math.max(margem, window.innerWidth - largura - margem);
+    const maxY = Math.max(margem, window.innerHeight - altura - margem - 40); // 40px de folga pra barra inferior do navegador mobile
+    const x = margem + Math.random() * (maxX - margem);
+    const y = margem + Math.random() * (maxY - margem);
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+
+  function tornarFujona(btn){
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if(btn.style.position !== "fixed"){
+        const rect = btn.getBoundingClientRect();
+        btn.style.width = rect.width + "px";
+        btn.style.position = "fixed";
+        btn.style.zIndex = "999";
+      }
+      moverAleatorio(btn);
+    });
+  }
+
+  function mostrarIntro(){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const btnProximo = document.getElementById("btnProximo");
+    elPergunta.textContent = "Aiaii chatinha...";
+    elOpcoes.innerHTML = "";
+    btnProximo.textContent = "CONTINUAR";
+    btnProximo.style.display = "inline-block";
+    btnProximo.onclick = () => mostrarPergunta("q1");
+  }
+
+  function mostrarPergunta(id){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const elVeredito = document.getElementById("veredito");
+    const btnProximo = document.getElementById("btnProximo");
+    const p = perguntas[id];
+
+    elPergunta.textContent = p.texto;
+    btnProximo.textContent = "PRÓXIMO";
+    btnProximo.style.display = "none";
+    elVeredito.style.display = "none";
+    elVeredito.textContent = "";
+
+    p.opcoes.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "opcao";
+      btn.textContent = opt.label;
+      btn.addEventListener("click", () => {
+        elOpcoes.querySelectorAll("button").forEach(b => b.disabled = true);
+        elVeredito.innerHTML = (opt.alerta ? svgAlerta : "") + opt.resp;
+        elVeredito.style.display = "block";
+        btnProximo.style.display = "inline-block";
+        btnProximo.onclick = () => {
+          if(opt.prox === "RESULTADO"){
+            mostrarResultado();
+          } else {
+            mostrarPergunta(opt.prox);
+          }
+        };
+      });
+      elOpcoes.appendChild(btn);
+    });
+  }
+
+  function mostrarResultado(){
+    card.innerHTML = `
+      ${iconeTopoHTML}
+      <div class="resultado-titulo">
+        <svg class="icone-inline" style="width:22px;height:22px;vertical-align:-5px" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"></path><path d="M7 5H4a2 2 0 0 0 0 4h3"></path><path d="M17 5h3a2 2 0 0 1 0 4h-3"></path></svg>
+        VOCÊ É OFICIALMENTE CHATA
+      </div>
+      <div class="resultado-lista">
+        <div>nível: <b>extremamente alto</b></div>
+        <div>diagnóstico: <b>confirmado</b></div>
+        <div>tentativas de negar: <b>detectadas</b></div>
+        <div>tentativas de escapar: <b>fracassadas</b></div>
+        <div>possibilidade de cura: <b>ainda estamos estudando</b></div>
+      </div>
+      <div class="rodape">
+        relaxa, sempre irei te adorar mesmo você sendo assim...<br>
+        chatinha ${svgCoracao}
+      </div>
+      <div class="linha-finalizar">
+        <button class="btn-finalizar" id="btnFinalizar">Finalizar &rarr;</button>
+      </div>
+    `;
+    document.getElementById("btnFinalizar").onclick = () => mostrarAdora();
+  }
+
+  function mostrarAdora(){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const elVeredito = document.getElementById("veredito");
+    const btnProximo = document.getElementById("btnProximo");
+    elPergunta.textContent = "Você me adora?";
+    elVeredito.style.display = "none";
+    btnProximo.style.display = "none";
+
+    const btnClaro = document.createElement("button");
+    btnClaro.className = "opcao";
+    btnClaro.textContent = "CLARO";
+    btnClaro.addEventListener("click", () => {
+      elOpcoes.innerHTML = "";
+      elVeredito.textContent = "Eu sei gatinha";
+      elVeredito.style.display = "block";
+      btnProximo.style.display = "inline-block";
+      btnProximo.onclick = () => mostrarAma();
+    });
+
+    const btnNao = document.createElement("button");
+    btnNao.className = "opcao";
+    btnNao.textContent = "CLARO QUE NÃO";
+    tornarFujona(btnNao);
+
+    elOpcoes.appendChild(btnClaro);
+    elOpcoes.appendChild(btnNao);
+  }
+
+  function mostrarAma(){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const elVeredito = document.getElementById("veredito");
+    const btnProximo = document.getElementById("btnProximo");
+    elPergunta.textContent = "E você me ama?";
+    elVeredito.style.display = "none";
+    btnProximo.style.display = "none";
+
+    const btnMuitoooo = document.createElement("button");
+    btnMuitoooo.className = "opcao";
+    btnMuitoooo.textContent = "MUITOOOO";
+    btnMuitoooo.addEventListener("click", () => mostrarAmaResultado());
+
+    const btnMuito = document.createElement("button");
+    btnMuito.className = "opcao";
+    btnMuito.textContent = "MUITO";
+    tornarFujona(btnMuito);
+
+    elOpcoes.appendChild(btnMuitoooo);
+    elOpcoes.appendChild(btnMuito);
+  }
+
+  function mostrarAmaResultado(){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const btnProximo = document.getElementById("btnProximo");
+    elOpcoes.innerHTML = "";
+    elPergunta.textContent = "EU TE ADORO MUITO MAIS";
+    btnProximo.textContent = "PRÓXIMO";
+    btnProximo.style.display = "inline-block";
+    btnProximo.onclick = () => mostrarFinalQ();
+  }
+
+  function mostrarFinalQ(){
+    baseSkeleton();
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const elVeredito = document.getElementById("veredito");
+    const btnProximo = document.getElementById("btnProximo");
+    elPergunta.textContent = "...?";
+    elVeredito.style.display = "none";
+    btnProximo.style.display = "none";
+
+    const opcoesFinal = [
+      { label:"EU AMO MAIS", resp:"XIUUUUUUUU" },
+      { label:"EU SEI", resp:"sabemos, pois sempre será." }
+    ];
+
+    opcoesFinal.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "opcao";
+      btn.textContent = opt.label;
+      btn.addEventListener("click", () => {
+        elOpcoes.querySelectorAll("button").forEach(b => b.disabled = true);
+        elVeredito.textContent = opt.resp;
+        elVeredito.style.display = "block";
+        mostrarBotaoCoracao();
+      });
+      elOpcoes.appendChild(btn);
+    });
+  }
+
+  function mostrarBotaoCoracao(){
+    if(document.getElementById("btnCoracaoFinal")) return;
+    const btnCoracao = document.createElement("button");
+    btnCoracao.id = "btnCoracaoFinal";
+    btnCoracao.className = "btn-coracao";
+    btnCoracao.innerHTML = `<svg class="coracao-btn" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.1 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3C11.6 4.7 13.4 3.7 15.4 4c3.6.5 5.2 4.1 3.6 7.7C19.5 16.4 12 21 12 21z"></path></svg>`;
+    btnCoracao.addEventListener("click", () => mostrarIntro());
+    card.appendChild(btnCoracao);
+  }
+
+  mostrarIntro();
+</script>
+
+</body>
+</html>
