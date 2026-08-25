@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>vc eh chata? (teste 100% cientifico)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,11 @@
   }
 
   *{box-sizing:border-box;}
+
+  html, body{
+    height:100%;
+    overflow:hidden;
+  }
 
   body{
     margin:0;
@@ -35,6 +40,8 @@
   .card{
     width:100%;
     max-width:440px;
+    max-height:90vh;
+    overflow-y:auto;
     background:#25123f;
     border:3px solid var(--lilas-forte);
     border-radius:18px 22px 20px 16px;
@@ -127,6 +134,7 @@
     cursor:pointer;
     text-align:center;
     width:100%;
+    white-space:nowrap;
   }
 
   .opcao:hover{
@@ -323,12 +331,21 @@
     `;
   }
 
+  function getViewport(){
+    const vv = window.visualViewport;
+    return {
+      w: vv ? vv.width : window.innerWidth,
+      h: vv ? vv.height : window.innerHeight
+    };
+  }
+
   function moverAleatorio(btn){
-    const largura = btn.offsetWidth || 150;
-    const altura = btn.offsetHeight || 45;
     const margem = 16;
-    const maxX = Math.max(margem, window.innerWidth - largura - margem);
-    const maxY = Math.max(margem, window.innerHeight - altura - margem - 40); // 40px de folga pra barra inferior do navegador mobile
+    const { w, h } = getViewport();
+    const largura = Math.min(btn.offsetWidth || 150, w - margem * 2);
+    const altura = Math.min(btn.offsetHeight || 45, h - margem * 2);
+    const maxX = Math.max(margem, w - largura - margem);
+    const maxY = Math.max(margem, h - altura - margem);
     const x = margem + Math.random() * (maxX - margem);
     const y = margem + Math.random() * (maxY - margem);
     btn.style.left = x + "px";
@@ -343,6 +360,7 @@
         btn.style.width = rect.width + "px";
         btn.style.position = "fixed";
         btn.style.zIndex = "999";
+        btn.style.margin = "0";
       }
       moverAleatorio(btn);
     });
@@ -480,7 +498,7 @@
     const elOpcoes = document.getElementById("opcoes");
     const btnProximo = document.getElementById("btnProximo");
     elOpcoes.innerHTML = "";
-    elPergunta.textContent = "EU TE ADORO MUITO MAIS";
+    elPergunta.textContent = "EU TE AMO MUITO MAIS";
     btnProximo.textContent = "PRÓXIMO";
     btnProximo.style.display = "inline-block";
     btnProximo.onclick = () => mostrarFinalQ();
