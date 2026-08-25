@@ -20,19 +20,21 @@
 
   html, body{
     height:100%;
+    width:100%;
+    margin:0;
     overflow:hidden;
+    position:fixed;
+    top:0;
+    left:0;
   }
 
   body{
-    margin:0;
-    min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:20px;
     font-family:'Poppins', sans-serif;
     background:linear-gradient(160deg, var(--roxo-1) 0%, var(--roxo-2) 55%, var(--roxo-3) 100%);
-    background-attachment:fixed;
     color:var(--branco);
     text-align:center;
   }
@@ -320,6 +322,7 @@
   };
 
   function baseSkeleton(){
+    document.querySelectorAll(".btn-fujona").forEach(b => b.remove());
     card.innerHTML = `
       ${iconeTopoHTML}
       <div class="pergunta" id="pergunta"></div>
@@ -356,9 +359,13 @@
       if(btn.style.position !== "fixed"){
         const rect = btn.getBoundingClientRect();
         btn.style.width = rect.width + "px";
+        btn.style.left = rect.left + "px";
+        btn.style.top = rect.top + "px";
         btn.style.position = "fixed";
         btn.style.zIndex = "999";
         btn.style.margin = "0";
+        btn.classList.add("btn-fujona");
+        document.body.appendChild(btn);
       }
       moverAleatorio(btn);
     });
@@ -450,6 +457,7 @@
     btnClaro.className = "opcao";
     btnClaro.textContent = "CLARO";
     btnClaro.addEventListener("click", () => {
+      document.querySelectorAll(".btn-fujona").forEach(b => b.remove());
       elOpcoes.innerHTML = "";
       elVeredito.textContent = "Eu sei gatinha";
       elVeredito.style.display = "block";
@@ -496,7 +504,7 @@
     const elOpcoes = document.getElementById("opcoes");
     const btnProximo = document.getElementById("btnProximo");
     elOpcoes.innerHTML = "";
-    elPergunta.textContent = "EU TE AMO MUITO MAIS";
+    elPergunta.textContent = "EU TE AMO MUITO MAIS!!!!!!!!";
     btnProximo.textContent = "PRÓXIMO";
     btnProximo.style.display = "inline-block";
     btnProximo.onclick = () => mostrarFinalQ();
